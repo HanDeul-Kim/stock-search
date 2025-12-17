@@ -1,0 +1,12 @@
+input {outline: none; color:#000; border:none;}
+[class*="input-"] {
+    border-radius: 4px;
+    padding: 4px 12px;
+    border: 1px solid #ccc;
+}
+.input-sm {}
+.input-md {
+    width: 400px;
+    height: 32px;
+}
+.input-lg {}
