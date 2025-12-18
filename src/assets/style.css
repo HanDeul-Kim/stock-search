@@ -8,6 +8,7 @@ a{text-decoration: none; color:#000;}
     margin: 0 auto;
     padding-top: 20px;
 }
+/********************* header *********************/
 header {
     border-bottom: 1px solid #edeff2;
     padding: 10px 20px;
@@ -23,11 +24,28 @@ nav {
 .gnb {
     display:flex;
 }
+/********************* 검색 input *********************/
 .stock-search {
     display: flex;
     align-items: center;
     gap: 80px;
 }
 .search-list {
+    display:flex;
+    justify-content: space-between;
     cursor: pointer;
+}
+.stock-search-inner {
+    position: relative;
+}
+.search-auto{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 92%;
+    padding: 4px 12px;
+    border-radius: 0 0 4px 4px;
+    border: 1px solid #ccc; 
+    border-top: none;
+    background-color: #fff;
 }

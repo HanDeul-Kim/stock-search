@@ -39,10 +39,10 @@ async function getAccessToken() {
             }
         });
         accessToken = res.data.access_token;
-        console.log("➡️ KIS API 토큰 발급 성공");
+        console.log("토큰 발급 성공");
         return accessToken;
     } catch (err) {
-        console.error("❌ 토큰 발급 실패:", err.response?.data || err.message);
+        console.error("토큰 발급 실패:", err.response?.data || err.message);
         return null;
     }
 }
@@ -65,7 +65,7 @@ async function fetchRealStockData(code) {
                     "custtype": "P"   // 개인고객
                 },
                 params: {
-                    FID_COND_MRKT_DIV_CODE: "J", // KRX
+                    FID_COND_MRKT_DIV_CODE: "J", // KRX임. nxt도 하고싶은데 나중에
                     FID_INPUT_ISCD: code          // 종목코드
                 }
             }
@@ -74,12 +74,13 @@ async function fetchRealStockData(code) {
         const out = res.data.output; // 배열 접근 제거
 
         return {
-            price: out.stck_prpr,
-            per: out.per,
-            pbr: out.pbr
+            price: out.stck_prpr, // 가격
+            per: out.per, // per
+            pbr: out.pbr, // pbr
+            volume: out.acml_vol // 거래량
         };
     } catch (err) {
-        console.error("❌ 종목 데이터 조회 실패:", err.response?.data || err.message);
+        console.error("종목 데이터 조회 실패:", err.response?.data || err.message);
         return null;
     }
 }
@@ -102,9 +103,10 @@ app.get('/api/stocks/:code', async (req, res) => {
 
     res.json({
         ...stock,
-        price: realData?.price ?? null,
+        price: realData?.price ?? null, 
         per: realData?.per ?? null,
-        pbr: realData?.pbr ?? null
+        pbr: realData?.pbr ?? null,
+        volume: realData?.volume ?? null,
     });
 });
 
