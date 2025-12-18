@@ -18,7 +18,21 @@
                 <h2>{{ stockInfo.name }} ({{ stockInfo.code }})</h2>
                 <p>시장: {{ formatMarket(stockInfo.market) }}</p>
                 <p>현재가: {{ formatNumber(stockInfo.price) }}원 / PER: {{ stockInfo.per }} / PBR: {{ stockInfo.pbr }}</p>
+                <p :style="{ color: stockInfo.diff > 0 ? '#F40006' : stockInfo.diff < 0 ? '#005FE0' : '#222', 'font-weight': 'bold'}">
+                    전일대비:
+                    {{ stockInfo.diff > 0 ? '+' : '' }}{{ formatNumber(stockInfo.diff) }}원
+                    ({{ stockInfo.diffRate > 0 ? '+' : '' }}{{ stockInfo.diffRate }}%)
+                </p>
                 <p>거래량: {{ formatNumber(stockInfo.volume) }}</p>
+                <p>
+                    시가: {{ formatNumber(stockInfo.open) }} /
+                    고가: {{ formatNumber(stockInfo.high) }} /
+                    저가: {{ formatNumber(stockInfo.low) }}
+                </p>
+                <p>
+                    상한가: {{ formatNumber(stockInfo.upper) }} /
+                    하한가: {{ formatNumber(stockInfo.lower) }}
+                </p>
             </div>
         </li>
         <li>
@@ -45,7 +59,7 @@ export default {
         // 컴포넌트가 마운트될 때 전역 클릭 이벤트 리스너 등록
         document.addEventListener('click', this.handleClickOutside);
     },
-    beforeUnmount() { 
+    beforeUnmount() {
         // 컴포넌트가 제거될 때 리스너 제거
         document.removeEventListener('click', this.handleClickOutside);
     },

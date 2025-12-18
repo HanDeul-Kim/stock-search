@@ -74,10 +74,18 @@ async function fetchRealStockData(code) {
         const out = res.data.output; // 배열 접근 제거
 
         return {
-            price: out.stck_prpr, // 가격
-            per: out.per, // per
-            pbr: out.pbr, // pbr
-            volume: out.acml_vol // 거래량
+            price: out.stck_prpr,           // 가격
+            per: out.per,                   // per
+            pbr: out.pbr,                   // pbr
+            volume: out.acml_vol,            // 거래량,
+            diff: out.prdy_vrss,            // 전일대비 가격
+            diffRate: out.prdy_ctrt,        // 전일대비 %
+            open: out.stck_oprc,            // 시가
+            high: out.stck_hgpr,            // 고가
+            low: out.stck_lwpr,             // 저가
+            upper: out.stck_mxpr,           // 상한가
+            lower: out.stck_llam,           // 하한가
+            tradeAmount: out.acml_tr_pbmn,  // 거래대금
         };
     } catch (err) {
         console.error("종목 데이터 조회 실패:", err.response?.data || err.message);
@@ -103,10 +111,7 @@ app.get('/api/stocks/:code', async (req, res) => {
 
     res.json({
         ...stock,
-        price: realData?.price ?? null, 
-        per: realData?.per ?? null,
-        pbr: realData?.pbr ?? null,
-        volume: realData?.volume ?? null,
+        ...(realData ?? {})
     });
 });
 
