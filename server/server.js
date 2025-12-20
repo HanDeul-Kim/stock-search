@@ -16,17 +16,19 @@ app.use(cors());
 const PORT = 3000;
 
 const DATA_PATH = path.join(__dirname, 'stocks.json');
+// 내 json 데이터들 여기에 담아
 let stocks = [];
 
 if (fs.existsSync(DATA_PATH)) {
     stocks = JSON.parse(fs.readFileSync(DATA_PATH, 'utf-8'));
-    console.log(`📦 ${stocks.length} stocks loaded`);
+    console.log(`${stocks.length}개 종목 로드 성공`);
 }
-
+// 한국투자증권 open api 기본 주소
 const API_BASE = "https://openapi.koreainvestment.com:9443";
 const APP_KEY = process.env.API_KEY;
 const APP_SECRET = process.env.API_SECRET;
 
+// 발급받은 토큰 저장해두려고 만든 변수
 let accessToken = null;
 // 토큰접근
 async function getAccessToken() {
@@ -47,17 +49,18 @@ async function getAccessToken() {
         return null;
     }
 }
-// 시총 백만단위로 변경
+// 시총 억단위가 기본인데 백만단위로 변경
 function convertEokToMillion(value) {
     if (!value) return null;
     return Number(value) * 100;
 }
-// 한국투자증권 api (기본시세)
+// 기본시세 가져오는 함수
 async function fetchRealStockData(code) {
     try {
         const token = await getAccessToken();
         if (!token) return null;
 
+        // 한국투자증권 시세 api 호출 (inquire-price가 기본임)
         const res = await axios.get(
             `${API_BASE}/uapi/domestic-stock/v1/quotations/inquire-price`,
             {
@@ -76,8 +79,9 @@ async function fetchRealStockData(code) {
             }
         );
 
-        const out = res.data.output;        // 배열 접근 제거
+        const out = res.data.output;        // res.data.output.stck_prpr 가독성 위해서
 
+        // 프론트로 뿌려줄 데이터들
         return {
             price: out.stck_prpr,           // 가격
             per: out.per,                   // per
@@ -101,23 +105,29 @@ async function fetchRealStockData(code) {
         return null;
     }
 }
-
+// 자동완성 검색 api
 app.get('/api/stocks', (req, res) => {
     const q = req.query.q ?? "";
     const keyword = q.trim().toLowerCase();
+    // json 데이터에서 일치하는거 검색
     const result = stocks.filter(
         s => s.name.toLowerCase().includes(keyword) || s.code === keyword
     );
+    // 최대 20개 반환
     res.json(result.slice(0, 20));
 });
 
+// 검색한 종목 상세조회 api
 app.get('/api/stocks/:code', async (req, res) => {
-    const code = req.params.code;
+    const code = req.params.code; // api/stocks/12345
+    // json 데이터에서 일치하는거 검색
     const stock = stocks.find(s => s.code === code);
     if (!stock) return res.status(404).json({ error: "Not found" });
 
+    // 한국투자증권 api에서 가져온 실시간데이터
     const realData = await fetchRealStockData(code);
 
+    // json 데이터 + 한국투자증권 api 데이터 합쳐서 응답
     res.json({
         ...stock,
         ...(realData ?? {})

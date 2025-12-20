@@ -53,19 +53,22 @@ export default {
     name: 'SearchBar',
     data() {
         return {
+            // input 입력값 
             searchQuery: '',
+            // 자동완성 목록
             suggestions: [],
+            // 검색한 종목 상세 정보
             stockInfo: null,
-            // 자동완성 창의 표시 여부를 제어하는 상태값
+            // 자동완성 표시여부
             isSuggestionsVisible: false
         };
     },
     mounted() {
-        // 컴포넌트가 마운트될 때 전역 클릭 이벤트 리스너 등록
+        // 화면 클림 감지 이벤트 (검색창에서 빈공간 누르면 사라지게 하려고)
         document.addEventListener('click', this.handleClickOutside);
     },
     beforeUnmount() {
-        // 컴포넌트가 제거될 때 리스너 제거
+        // 이벤드 해제
         document.removeEventListener('click', this.handleClickOutside);
     },
     methods: {
@@ -82,31 +85,36 @@ export default {
                 console.error(err);
             }
         },
+        // 코스닥 global이라고 나오는얘들은 그냥 코스닥으로 나오게끔
         formatMarket(market) {
             if (market === 'KOSDAQ GLOBAL') return 'KOSDAQ';
             return market;
         },
+        // 입력 이벤트 처리 
         handleInput(event) {
             const q = event.target.value;
             this.search(q);
         },
-        // 외부클릭 감지
+        // 빈공간 클릭 할 때 자동완성창 닫는 함수
         handleClickOutside(event) {
             // 클릭된 요소가 검색창 컨테이너(ref="searchContainer") 내부에 포함되어 있지 않다면
             if (this.$refs.searchContainer && !this.$refs.searchContainer.contains(event.target)) {
                 this.isSuggestionsVisible = false;
             }
         },
+
+        // 종목 클릭 시 상세 정보 요청
         async selectStock(item) {
             try {
                 const res = await axios.get(`http://localhost:3000/api/stocks/${item.code}`);
                 this.stockInfo = res.data;
                 this.searchQuery = item.name;
-                this.isSuggestionsVisible = false; // 선택 후 닫기
+                this.isSuggestionsVisible = false; // 선택하면 자동완성 꺼지게
             } catch (err) {
                 console.error(err);
             }
         },
+        // 엔터로도 종목 서치 가능하게 
         fetchStock() {
             const queryLower = this.searchQuery.toLowerCase();
             const item = this.suggestions.find(
@@ -116,6 +124,7 @@ export default {
                 this.selectStock(item);
             }
         },
+        // 숫자 콤마 표기
         formatNumber(value) {
             if (!value) return '-';
             return Number(value).toLocaleString();
