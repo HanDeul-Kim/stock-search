@@ -7,7 +7,8 @@
 
                 <div v-if="suggestions.length && isSuggestionsVisible" class="search-auto">
                     <ul>
-                        <li v-for="item in suggestions" :key="item.code" @click="selectStock(item)" class="search-list">
+                        <!-- 이벤트 버블링때문에 @click.stop으로 변경했음. -->
+                        <li v-for="item in suggestions" :key="item.code" @click.stop="selectStock(item)" class="search-list">
                             {{ item.code }} {{ item.name }} {{ formatMarket(item.market) }}
                         </li>
                     </ul>
