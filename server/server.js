@@ -71,18 +71,18 @@ async function fetchRealStockData(code) {
                 },
                 params: {
                     FID_COND_MRKT_DIV_CODE: "J", // KRX임. nxt도 하고싶은데 나중에
-                    FID_INPUT_ISCD: code          // 종목코드
+                    FID_INPUT_ISCD: code         // 종목코드
                 }
             }
         );
 
-        const out = res.data.output; // 배열 접근 제거
+        const out = res.data.output;        // 배열 접근 제거
 
         return {
             price: out.stck_prpr,           // 가격
             per: out.per,                   // per
             pbr: out.pbr,                   // pbr
-            volume: out.acml_vol,            // 거래량,
+            volume: out.acml_vol,           // 거래량,
             diff: out.prdy_vrss,            // 전일대비 가격
             diffRate: out.prdy_ctrt,        // 전일대비 %
             open: out.stck_oprc,            // 시가
@@ -92,9 +92,9 @@ async function fetchRealStockData(code) {
             lower: out.stck_llam,           // 하한가
             tradeAmount: out.acml_tr_pbmn,  // 거래대금
             high52w: out.d250_hgpr,         // 52주 최고
-            low52w: out.d250_lwpr,           // 52주 최저
+            low52w: out.d250_lwpr,          // 52주 최저
             sector: out.bstp_kor_isnm,      // 업종
-            marketCap: convertEokToMillion(out.hts_avls)        // 기존 억단위 인데, 백만으로 바꾼거
+            marketCap: convertEokToMillion(out.hts_avls)   // 기존 억단위 인데, 백만으로 바꾼거
         };
     } catch (err) {
         console.error("종목 데이터 조회 실패:", err.response?.data || err.message);
