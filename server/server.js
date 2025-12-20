@@ -28,6 +28,7 @@ const APP_KEY = process.env.API_KEY;
 const APP_SECRET = process.env.API_SECRET;
 
 let accessToken = null;
+// 토큰접근
 async function getAccessToken() {
     if (accessToken) return accessToken;
     try {
@@ -46,8 +47,12 @@ async function getAccessToken() {
         return null;
     }
 }
-
-// KIS API로 현재가 + 지표 조회
+// 시총 백만단위로 변경
+function convertEokToMillion(value) {
+    if (!value) return null;
+    return Number(value) * 100;
+}
+// 한국투자증권 api (기본시세)
 async function fetchRealStockData(code) {
     try {
         const token = await getAccessToken();
@@ -86,6 +91,10 @@ async function fetchRealStockData(code) {
             upper: out.stck_mxpr,           // 상한가
             lower: out.stck_llam,           // 하한가
             tradeAmount: out.acml_tr_pbmn,  // 거래대금
+            high52w: out.d250_hgpr,         // 52주 최고
+            low52w: out.d250_lwpr,           // 52주 최저
+            sector: out.bstp_kor_isnm,      // 업종
+            marketCap: convertEokToMillion(out.hts_avls)        // 기존 억단위 인데, 백만으로 바꾼거
         };
     } catch (err) {
         console.error("종목 데이터 조회 실패:", err.response?.data || err.message);

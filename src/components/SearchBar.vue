@@ -33,6 +33,10 @@
                     상한가: {{ formatNumber(stockInfo.upper) }} /
                     하한가: {{ formatNumber(stockInfo.lower) }}
                 </p>
+                <p>52주 최고가 : {{formatNumber(stockInfo.high52w)}}</p>
+                <p>52주 최저가 : {{formatNumber(stockInfo.low52w)}}</p>
+                <p>업종 : {{stockInfo.sector}}</p>
+                <p>시가총액 : {{formatNumber(stockInfo.marketCap)}} (단위: 백만)</p>
             </div>
         </li>
         <li>
