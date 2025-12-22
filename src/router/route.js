@@ -1,21 +1,21 @@
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
-import StockDetail from '../views/StockDetail.vue'
+// import StockDetail from '../views/StockDetail.vue'
 import Home from '../views/Home.vue'
-import Mypage from '../views/Mypage.vue'
+// import Mypage from '../views/Mypage.vue'
 const routes = [
     {
         path: "/",
         component: Home
     },
-    {
-        path: "/detail/:code",
-        component: StockDetail
+    // {
+    //     path: "/detail/:code",
+    //     component: StockDetail
         
-    },
-    {
-        path: "/mypage",
-        component: Mypage
-    }
+    // },
+    // {
+    //     path: "/mypage",
+    //     component: Mypage
+    // }
 
 
 
