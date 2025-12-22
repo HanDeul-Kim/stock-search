@@ -56,14 +56,13 @@ function convertEokToMillion(value) {
 }
 // 시가총액 순위 코스피 코스닥 나누기
 function normalizeMarket(market) {
-        if (!market) return null;
-        // 코스닥 + 코스닥 글로벌을 하나로
-        if (market.includes('KOSDAQ')) return 'KOSDAQ';
-        // 코스피
-        if (market.includes('KOSPI')) return 'KOSPI';
-        return null;
+    // 코스닥 + 코스닥 글로벌을 하나로
+    if (market === 'KOSDAQ' || market === 'KOSDAQ GLOBAL') {
+        return 'KOSDAQ';
     }
-// 기본시세 가져오는 함수
+    return market; // KOSPI
+}
+// 개별종목시세 APi (quotations/inquire-price)
 async function fetchRealStockData(code) {
     try {
         const token = await getAccessToken();
@@ -126,7 +125,7 @@ app.get('/api/stocks', (req, res) => {
     res.json(result.slice(0, 20));
 });
 
-// 검색한 종목 상세조회 api (실시간 데이터 포함)
+// 검색한 종목 상세조회 api (개별종목시세)
 app.get('/api/stocks/:code', async (req, res) => {
     const code = req.params.code; // api/stocks/12345
     // json 데이터에서 일치하는거 검색
@@ -139,14 +138,10 @@ app.get('/api/stocks/:code', async (req, res) => {
     // 코스닥 코스피 총합에서 시총순위 구하지 않고 구분해서 시총순위 구하는 코드
     const normalizedMarket = normalizeMarket(stock.market);
     const marketStocks = stocks
-    .filter(
-        s =>
-            normalizeMarket(s.market) === normalizedMarket &&
-            typeof s.marketCap === 'number'
-    )
-    .sort((a, b) => b.marketCap - a.marketCap);
-    const rankIndex = marketStocks.findIndex(s => s.code === code);
-    const rank = rankIndex >= 0 ? rankIndex + 1 : null;
+        .filter(s => normalizeMarket(s.market) === normalizedMarket)
+        .map(s => ({ ...s, marketCap: s.marketCap || 0 }))
+        .sort((a, b) => b.marketCap - a.marketCap);
+    const rank = marketStocks.findIndex(s => s.code === code) + 1;
 
     // json + api 데이터 합쳐서 vue로 응답해줌
     res.json({
