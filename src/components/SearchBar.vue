@@ -41,8 +41,9 @@
                 <p>업종 : {{ stockInfo.sector }}</p>
                 <p>시가총액 : {{ formatNumber(stockInfo.marketCap) }} (단위: 백만)</p>
                 <p>시가총액 순위 :
-                    {{ stockInfo.marketCapRank }}위
-                    ({{ stockInfo.marketRankMarket }})</p>
+                    {{ stockInfo.marketRankMarket === 'KOSPI' ? '코스피' : '코스닥'}} {{ stockInfo.marketCapRank }}위
+                    
+                </p>
             </div>
         </li>
         <li>
