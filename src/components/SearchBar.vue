@@ -8,7 +8,8 @@
                 <div v-if="suggestions.length && isSuggestionsVisible" class="search-auto">
                     <ul>
                         <!-- 이벤트 버블링때문에 @click.stop으로 변경했음. -->
-                        <li v-for="item in suggestions" :key="item.code" @click.stop="selectStock(item)" class="search-list">
+                        <li v-for="item in suggestions" :key="item.code" @click.stop="selectStock(item)"
+                            class="search-list">
                             {{ item.code }} {{ item.name }} {{ formatMarket(item.market) }}
                         </li>
                     </ul>
@@ -19,7 +20,8 @@
                 <h2>{{ stockInfo.name }} ({{ stockInfo.code }})</h2>
                 <p>시장: {{ formatMarket(stockInfo.market) }}</p>
                 <p>현재가: {{ formatNumber(stockInfo.price) }}원 / PER: {{ stockInfo.per }} / PBR: {{ stockInfo.pbr }}</p>
-                <p :style="{ color: stockInfo.diff > 0 ? '#F40006' : stockInfo.diff < 0 ? '#005FE0' : '#222', 'font-weight': 'bold'}">
+                <p
+                    :style="{ color: stockInfo.diff > 0 ? '#F40006' : stockInfo.diff < 0 ? '#005FE0' : '#222', 'font-weight': 'bold' }">
                     전일대비:
                     {{ stockInfo.diff > 0 ? '+' : '' }}{{ formatNumber(stockInfo.diff) }}원
                     ({{ stockInfo.diffRate > 0 ? '+' : '' }}{{ stockInfo.diffRate }}%)
@@ -34,10 +36,13 @@
                     상한가: {{ formatNumber(stockInfo.upper) }} /
                     하한가: {{ formatNumber(stockInfo.lower) }}
                 </p>
-                <p>52주 최고가 : {{formatNumber(stockInfo.high52w)}}</p>
-                <p>52주 최저가 : {{formatNumber(stockInfo.low52w)}}</p>
-                <p>업종 : {{stockInfo.sector}}</p>
-                <p>시가총액 : {{formatNumber(stockInfo.marketCap)}} (단위: 백만)</p>
+                <p>52주 최고가 : {{ formatNumber(stockInfo.high52w) }}</p>
+                <p>52주 최저가 : {{ formatNumber(stockInfo.low52w) }}</p>
+                <p>업종 : {{ stockInfo.sector }}</p>
+                <p>시가총액 : {{ formatNumber(stockInfo.marketCap) }} (단위: 백만)</p>
+                <p>시가총액 순위 :
+                    {{ stockInfo.marketCapRank }}위
+                    ({{ stockInfo.marketRankMarket }})</p>
             </div>
         </li>
         <li>

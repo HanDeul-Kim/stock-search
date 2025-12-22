@@ -54,6 +54,15 @@ function convertEokToMillion(value) {
     if (!value) return null;
     return Number(value) * 100;
 }
+// 시가총액 순위 코스피 코스닥 나누기
+function normalizeMarket(market) {
+        if (!market) return null;
+        // 코스닥 + 코스닥 글로벌을 하나로
+        if (market.includes('KOSDAQ')) return 'KOSDAQ';
+        // 코스피
+        if (market.includes('KOSPI')) return 'KOSPI';
+        return null;
+    }
 // 기본시세 가져오는 함수
 async function fetchRealStockData(code) {
     try {
@@ -105,7 +114,7 @@ async function fetchRealStockData(code) {
         return null;
     }
 }
-// 자동완성 검색 api
+// 자동완성 종목 검색
 app.get('/api/stocks', (req, res) => {
     const q = req.query.q ?? "";
     const keyword = q.trim().toLowerCase();
@@ -117,20 +126,34 @@ app.get('/api/stocks', (req, res) => {
     res.json(result.slice(0, 20));
 });
 
-// 검색한 종목 상세조회 api
+// 검색한 종목 상세조회 api (실시간 데이터 포함)
 app.get('/api/stocks/:code', async (req, res) => {
     const code = req.params.code; // api/stocks/12345
     // json 데이터에서 일치하는거 검색
     const stock = stocks.find(s => s.code === code);
     if (!stock) return res.status(404).json({ error: "Not found" });
 
-    // 한국투자증권 api에서 가져온 실시간데이터
+    // 한국투자증권 api에서 가져온 실시간 데이터
     const realData = await fetchRealStockData(code);
 
-    // json 데이터 + 한국투자증권 api 데이터 합쳐서 응답
+    // 코스닥 코스피 총합에서 시총순위 구하지 않고 구분해서 시총순위 구하는 코드
+    const normalizedMarket = normalizeMarket(stock.market);
+    const marketStocks = stocks
+    .filter(
+        s =>
+            normalizeMarket(s.market) === normalizedMarket &&
+            typeof s.marketCap === 'number'
+    )
+    .sort((a, b) => b.marketCap - a.marketCap);
+    const rankIndex = marketStocks.findIndex(s => s.code === code);
+    const rank = rankIndex >= 0 ? rankIndex + 1 : null;
+
+    // json + api 데이터 합쳐서 vue로 응답해줌
     res.json({
-        ...stock,
-        ...(realData ?? {})
+        ...stock,                               // stocks.json에서 가져온 데이터
+        ...(realData ?? {}),                    // 한국투자증권 api 실시간 데이터
+        marketCapRank: rank,                    // 시총순위
+        marketRankMarket: normalizedMarket      // 코스피 코스닥 구분
     });
 });
 
