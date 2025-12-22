@@ -138,10 +138,14 @@ app.get('/api/stocks/:code', async (req, res) => {
     // 코스닥 코스피 총합에서 시총순위 구하지 않고 구분해서 시총순위 구하는 코드
     const normalizedMarket = normalizeMarket(stock.market);
     const marketStocks = stocks
-        .filter(s => normalizeMarket(s.market) === normalizedMarket)
-        .map(s => ({ ...s, marketCap: s.marketCap || 0 }))
-        .sort((a, b) => b.marketCap - a.marketCap);
-    const rank = marketStocks.findIndex(s => s.code === code) + 1;
+    .filter(
+        s =>
+            normalizeMarket(s.market) === normalizedMarket &&
+            typeof s.marketCap === 'number'
+    )
+    .sort((a, b) => b.marketCap - a.marketCap);
+    const rankIndex = marketStocks.findIndex(s => s.code === code);
+    const rank = rankIndex >= 0 ? rankIndex + 1 : null;
 
     // json + api 데이터 합쳐서 vue로 응답해줌
     res.json({
