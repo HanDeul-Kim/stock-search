@@ -1,7 +1,7 @@
 <template>
     <Header />
     <div class="container">
-        <h1>주식 검색창입니다.</h1>
+        <router-view></router-view>
     </div>
 </template>
 

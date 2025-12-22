@@ -1,4 +1,7 @@
 *{padding: 0; margin: 0; box-sizing: border-box;}
+html,body {
+    height: 100%;
+}
 ul,ol,li {list-style: none;}
 a{text-decoration: none; color:#000;}
 
@@ -6,7 +9,7 @@ a{text-decoration: none; color:#000;}
     width: 100%;
     max-width: 1320px;
     margin: 0 auto;
-    padding-top: 20px;
+    padding: 10px 20px;
 }
 /********************* header *********************/
 header {

@@ -8,7 +8,7 @@
                 <div v-if="suggestions.length && isSuggestionsVisible" class="search-auto">
                     <ul>
                         <!-- 이벤트 버블링때문에 @click.stop으로 변경했음. -->
-                        <li v-for="item in suggestions" :key="item.code" @click.stop="selectStock(item)"
+                        <li v-for="(item, idx) in suggestions" :key="item.code" :idx="idx" @click.stop="selectStock(item), $router.push(`/detail/${item.code}`)"
                             class="search-list">
                             {{ item.code }} {{ item.name }} {{ formatMarket(item.market) }}
                         </li>

@@ -1,14 +1,11 @@
 <template>
-    <p></p>
-    <p></p>
-    <p></p>
-    
+    home route
 </template>
 
 <script>
 import SearchBar from './SearchBar.vue';
 export default {
-    name: 'Detail',
+    name: 'Header',
     data() {
         return {};
     },
