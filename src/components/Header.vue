@@ -3,7 +3,7 @@
         <nav>
             <div class="gnb">
                 <li>
-                    <a href="">Home</a>
+                    <router-link to="/">Home</router-link>
                 </li>
             </div>
             <SearchBar />

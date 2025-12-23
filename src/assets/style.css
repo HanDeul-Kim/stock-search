@@ -14,7 +14,6 @@ a{text-decoration: none; color:#000;}
 /********************* header *********************/
 header {
     border-bottom: 1px solid #edeff2;
-    padding: 10px 20px;
 }
 nav {
     display: flex;
@@ -23,6 +22,7 @@ nav {
     width: 100%;
     max-width: 1320px;
     margin: 0 auto;
+    padding: 10px 20px;
 }
 .gnb {
     display:flex;
@@ -51,4 +51,7 @@ nav {
     border: 1px solid #ccc; 
     border-top: none;
     background-color: #fff;
+}
+.search-list.active {
+    background-color: red;
 }

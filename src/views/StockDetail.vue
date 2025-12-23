@@ -66,14 +66,18 @@ export default {
             const res = await axios.get(`http://localhost:3000/api/stocks/${code}`);
             this.stockInfo = res.data;
         },
+        // 숫자 콤마 표기
         formatNumber(value) {
             if (!value) return '-';
             return Number(value).toLocaleString();
         },
+        // 코스닥 글로벌도 코스닥으로 통합
         formatMarket(market) {
             if (market === 'KOSDAQ GLOBAL') return 'KOSDAQ';
             return market;
         }
+        // 관심종목 추가
+
     }
 };
 </script>

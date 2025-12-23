@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 import StockDetail from '../views/StockDetail.vue'
 import Home from '../views/Home.vue'
+import Mypage from '../views/Mypage.vue'
 
 const routes = [
     {
@@ -12,6 +13,10 @@ const routes = [
         component: StockDetail
         
     },
+    {
+        path: "/mypage",
+        component: Mypage
+    }
     // {
     //     path: "/mypage",
     //     component: Mypage
