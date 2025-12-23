@@ -11,3 +11,16 @@ input {outline: none; color:#000; border:none;}
     height: 32px;
 }
 .input-lg {}
+/********************* button  *********************/
+button {outline: none; border:none; background: none; cursor: pointer;}
+.btn-sm {}
+.btn-md {
+    padding: 4px 10px;
+    border: 1px solid transparent;
+    font-size: 18px;
+}
+.btn-lg {}
+.btn-primary {
+    background-color: #d62727;
+    color:#fff;
+}
