@@ -41,6 +41,7 @@ nav {
 .stock-search-inner {
     position: relative;
 }
+/* 자동완성 리스트 */
 .search-auto{
     position: absolute;
     width: 100%;
@@ -54,4 +55,7 @@ nav {
 }
 .search-list.active {
     background-color: red;
+}
+.search-list:hover {
+    background-color: #ccc;
 }
