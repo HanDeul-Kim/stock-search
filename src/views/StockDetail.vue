@@ -7,12 +7,10 @@
             PER: {{ stockInfo.per }} /
             PBR: {{ stockInfo.pbr }}
         </p>
-        <p
-            :style="{
-                color: stockInfo.diff > 0 ? '#F40006' : stockInfo.diff < 0 ? '#005FE0' : '#222',
-                'font-weight': 'bold'
-            }"
-        >
+        <p :style="{
+            color: stockInfo.diff > 0 ? '#F40006' : stockInfo.diff < 0 ? '#005FE0' : '#222',
+            'font-weight': 'bold'
+        }">
             전일대비:
             {{ stockInfo.diff > 0 ? '+' : '' }}{{ formatNumber(stockInfo.diff) }}원
             ({{ stockInfo.diffRate > 0 ? '+' : '' }}{{ stockInfo.diffRate }}%)
@@ -37,7 +35,7 @@
             {{ stockInfo.marketCapRank }}위
         </p>
 
-        <button class="btn-md btn-primary">관심 종목으로 추가~!</button>
+        <button class="btn-md btn-primary" @click="addFavorite">관심 종목으로 추가~!</button>
     </div>
 </template>
 
@@ -58,7 +56,7 @@ export default {
     watch: {
         // url 바뀌면 새로바뀐 /:code값으로 함수 다시 실행
         '$route.params.code'(newCode) {
-            this.fetchStockDetail(newCode); 
+            this.fetchStockDetail(newCode);
         }
     },
     methods: {
@@ -75,9 +73,30 @@ export default {
         formatMarket(market) {
             if (market === 'KOSDAQ GLOBAL') return 'KOSDAQ';
             return market;
-        }
-        // 관심종목 추가
+        },
 
+        // 관심종목 추가
+        addFavorite() {
+            if (!this.stockInfo) return;
+
+            // 로컬스토리지에서 기존 데이터 가져오기
+            let favorites = JSON.parse(localStorage.getItem('favoriteStocks')) || [];
+
+            // 이미 있는지 확인
+            const exists = favorites.some(item => item.code === this.stockInfo.code);
+            if (exists) {
+                alert('이미 관심 종목에 추가된 종목입니다.');
+                return;
+            }
+
+            const newFavorite = this.stockInfo;
+            // const newFavorite = JSON.parse(JSON.stringify(this.stockInfo));
+
+            favorites.push(newFavorite);
+            localStorage.setItem('favoriteStocks', JSON.stringify(favorites));
+
+            alert('관심 종목에 추가되었습니다!');
+        }
     }
 };
 </script>
