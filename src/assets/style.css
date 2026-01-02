@@ -1,9 +1,24 @@
-*{padding: 0; margin: 0; box-sizing: border-box;}
-html,body {
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
     height: 100%;
 }
-ul,ol,li {list-style: none;}
-a{text-decoration: none; color:#000;}
+
+ul,
+ol,
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
 
 .container {
     width: 100%;
@@ -11,10 +26,12 @@ a{text-decoration: none; color:#000;}
     margin: 0 auto;
     padding: 10px 20px;
 }
+
 /********************* header *********************/
 header {
     border-bottom: 1px solid #edeff2;
 }
+
 nav {
     display: flex;
     justify-content: space-between;
@@ -24,38 +41,107 @@ nav {
     margin: 0 auto;
     padding: 10px 20px;
 }
+
 .gnb {
-    display:flex;
+    display: flex;
 }
+
 /********************* 검색 input *********************/
 .stock-search {
     display: flex;
     align-items: center;
     gap: 80px;
 }
+
 .search-list {
-    display:flex;
+    display: flex;
     justify-content: space-between;
     cursor: pointer;
 }
+
 .stock-search-inner {
     position: relative;
 }
+
 /* 자동완성 리스트 */
-.search-auto{
+.search-auto {
     position: absolute;
     width: 100%;
     left: 0;
     top: 92%;
     padding: 4px 12px;
     border-radius: 0 0 4px 4px;
-    border: 1px solid #ccc; 
+    border: 1px solid #ccc;
     border-top: none;
     background-color: #fff;
 }
+
 .search-list.active {
     background-color: red;
 }
+
 .search-list:hover {
     background-color: #ccc;
+}
+
+
+
+
+/********************* Home.vue 대시보드 스타일 *********************/
+.market-container {
+    width: 100%;
+    margin-top: 60px;
+}
+
+.loading-box {
+    text-align: center;
+    padding: 50px;
+    color: #666;
+}
+
+.market-item-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.market-item {
+    width: 100%;
+    border: 1px solid #eee;
+    text-align: center;
+    padding: 24px;
+    border-radius: 16px;
+    background-color: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.price {
+    font-size: 36px;
+    font-weight: 800;
+    color: #333;
+    margin: 15px 0;
+}
+
+.date {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 5px;
+}
+
+.red {
+    color: #ef5350;
+}
+.blue {
+    color: #42a5f5;
+}
+
+.error-box {
+    color: #ff5252;
+    padding: 20px;
+}
+.market-item-wrap b {
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 600;
 }

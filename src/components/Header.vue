@@ -9,18 +9,20 @@
             <SearchBar />
         </nav>
     </header>
-    
+    <!-- <Marquee /> -->
 </template>
 
 <script>
 import SearchBar from './SearchBar.vue';
+import Marquee from './Marquee.vue';
 export default {
     name: 'Header',
     data() {
         return {};
     },
     components: {
-        SearchBar
+        SearchBar,
+        Marquee
     },
     
 }

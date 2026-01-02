@@ -43,6 +43,15 @@ export default {
             selectKeybord: -1
         };
     },
+    watch: {
+        // 라우트가 바뀔 때마다 검색어 초기화
+        $route(to, from) {
+            this.searchQuery = '';
+            this.suggestions = [];
+            this.selectKeybord = -1;
+            this.isSuggestionsVisible = false;
+        }
+    },
     mounted() {
         // 화면 클릭 감지 이벤트 (검색창에서 빈공간 누르면 사라지게 하려고)
         document.addEventListener('click', this.handleClickOutside);
@@ -123,13 +132,13 @@ export default {
             if (!this.suggestions.length) return;
 
             // 현재 아무것도 선택되지 않은 상태면 첫 번째 항목 선택
-    if (this.selectKeybord === -1) {
-        this.selectKeybord = 0;
-    } 
-    // 마지막 항목이 아니면 아래로 이동
-    else if (this.selectKeybord < this.suggestions.length - 1) {
-        this.selectKeybord = this.selectKeybord + 1;
-    }
+            if (this.selectKeybord === -1) {
+                this.selectKeybord = 0;
+            }
+            // 마지막 항목이 아니면 아래로 이동
+            else if (this.selectKeybord < this.suggestions.length - 1) {
+                this.selectKeybord = this.selectKeybord + 1;
+            }
         },
         moveUp() {
             if (!this.suggestions.length) return;

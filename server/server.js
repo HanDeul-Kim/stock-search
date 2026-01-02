@@ -138,12 +138,12 @@ app.get('/api/stocks/:code', async (req, res) => {
     // 코스닥 코스피 총합에서 시총순위 구하지 않고 구분해서 시총순위 구하는 코드
     const normalizedMarket = normalizeMarket(stock.market);
     const marketStocks = stocks
-    .filter(
-        s =>
-            normalizeMarket(s.market) === normalizedMarket &&
-            typeof s.marketCap === 'number'
-    )
-    .sort((a, b) => b.marketCap - a.marketCap);
+        .filter(
+            s =>
+                normalizeMarket(s.market) === normalizedMarket &&
+                typeof s.marketCap === 'number'
+        )
+        .sort((a, b) => b.marketCap - a.marketCap);
     const rankIndex = marketStocks.findIndex(s => s.code === code);
     const rank = rankIndex >= 0 ? rankIndex + 1 : null;
 
@@ -156,6 +156,75 @@ app.get('/api/stocks/:code', async (req, res) => {
     });
 });
 
+// 공공데이터포털
+app.get('/api/market-indices', async (req, res) => {
+    try {
+        const SERVICE_KEY = decodeURIComponent(process.env.PUBLIC_API_KEY);
+        const url = 'https://apis.data.go.kr/1160100/service/GetMarketIndexInfoService/getStockMarketIndex';
+
+        const [kospiRes, kosdaqRes] = await Promise.all([
+            axios.get(url, {
+                params: { serviceKey: SERVICE_KEY, resultType: 'json', numOfRows: 5, pageNo: 1, idxNm: '코스피' }
+            }),
+            axios.get(url, {
+                params: { serviceKey: SERVICE_KEY, resultType: 'json', numOfRows: 5, pageNo: 1, idxNm: '코스닥' }
+            })
+        ]);
+
+        const result = {
+            kospi: kospiRes.data.response.body.items.item[0],
+            kosdaq: kosdaqRes.data.response.body.items.item[0]
+        };
+
+        res.json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('데이터를 가져오지 못했습니다.');
+    }
+});
+
+// 환율 (네이버 실시간 데이터 가져옴)
+app.get('/api/exchange/usdkrw-naver', async (req, res) => {
+    try {
+        const response = await axios.get(
+            'https://m.search.naver.com/p/csearch/content/qapirender.nhn',
+            {
+                params: {
+                    key: 'calculator',
+                    pkid: 141,
+                    q: '환율',
+                    where: 'm',
+                    u1: 'keb',
+                    u6: 'standardUnit',
+                    u7: 0,
+                    u3: 'USD',
+                    u4: 'KRW',
+                    u8: 'down',
+                    u2: 1
+                },
+                headers: {
+                    'User-Agent':
+                        'Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X)',
+                    'Referer': 'https://m.search.naver.com/'
+                }
+            }
+        );
+
+        const country = response.data.country;
+
+        const usd = country.find(v => v.currencyUnit === '달러');
+        const krw = country.find(v => v.currencyUnit === '원');
+
+        res.json({
+            base: usd.subValue,
+            rate: Number(krw.value.replace(/,/g, '')), // 1444.10
+            raw: response.data 
+        });
+    } catch (e) {
+        console.error('NAVER 환율 에러', e.message);
+        res.status(500).json({ error: 'NAVER_EXCHANGE_FAIL' });
+    }
+});
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

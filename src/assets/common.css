@@ -24,3 +24,15 @@ button {outline: none; border:none; background: none; cursor: pointer;}
     background-color: #d62727;
     color:#fff;
 }
+/********************* font  *********************/
+.tit-24 {
+    color:#000;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+/********************* gap & margin & padding *********************/
+.dashboard-item + .dashboard-item {
+    margin-top: 40px;
+}
