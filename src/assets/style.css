@@ -29,7 +29,9 @@ a {
 
 /********************* header *********************/
 header {
+    position: relative;
     border-bottom: 1px solid #edeff2;
+    z-index: 10;
 }
 
 nav {
@@ -129,19 +131,70 @@ nav {
 }
 
 .red {
-    color: #ef5350;
+    color: #ff4d4d;
 }
+
 .blue {
-    color: #42a5f5;
+    color: #4d94ff;
 }
 
 .error-box {
     color: #ff5252;
     padding: 20px;
 }
+
 .market-item-wrap b {
     display: flex;
     justify-content: center;
     font-size: 16px;
     font-weight: 600;
+}
+
+/* marquee */
+.marquee-container {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    background: #000;
+    display: flex;
+    align-items: center;
+}
+
+.marquee-wrap {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    width: max-content;
+    animation: marquee 20s linear infinite;
+    gap: 60px;
+}
+
+.marquee-wrap:hover {
+    animation-play-state: paused;
+}
+
+.marquee {
+    font-size: 14px;
+    color: #fff;
+    white-space: nowrap;
+}
+
+.up {
+    color: #ff4d4d;
+}
+
+.down {
+    color: #4d94ff;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
 }

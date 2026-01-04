@@ -31,6 +31,12 @@ button {outline: none; border:none; background: none; cursor: pointer;}
     font-weight: 600;
     margin-bottom: 18px;
 }
+.tit-28 {
+    color:#000;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
 
 /********************* gap & margin & padding *********************/
 .dashboard-item + .dashboard-item {

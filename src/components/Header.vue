@@ -9,7 +9,7 @@
             <SearchBar />
         </nav>
     </header>
-    <!-- <Marquee /> -->
+    <Marquee />
 </template>
 
 <script>

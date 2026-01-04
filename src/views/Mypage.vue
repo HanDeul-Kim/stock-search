@@ -1,6 +1,6 @@
 <template>
     <div style="padding: 20px;">
-        <h2>나의 관심 종목</h2>
+        <h2 class="tit-24">나의 관심 종목</h2>
         <div v-if="favoriteStocks.length > 0">
             <div v-for="(stock, idx) in favoriteStocks" :key="stock.code"
                 style="border: 1px solid #ccc; padding: 15px; margin-bottom: 15px; border-radius: 8px;">
@@ -19,6 +19,9 @@
             <p>추가 한 관심 종목이 없습니다.</p>
         </div>
     </div>
+
+
+    
 </template>
 
 <script>import axios from 'axios';
@@ -49,7 +52,7 @@ export default {
                     ...sent[idx],     // 기존 데이터
                     ...res.data       // 새로 추가한 데이터 
                 }));
-                
+
 
             } catch (error) {
                 console.error("최신 데이터 불러오기 실패:", error);

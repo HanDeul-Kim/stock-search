@@ -1,6 +1,6 @@
 <template>
     <div v-if="stockInfo" style="margin-top:20px;">
-        <h2>{{ stockInfo.name }} ({{ stockInfo.code }})</h2>
+        <h2 class="tit-28">{{ stockInfo.name }} ({{ stockInfo.code }})</h2>
         <p>시장: {{ formatMarket(stockInfo.market) }}</p>
         <p>
             현재가: {{ formatNumber(stockInfo.price) }}원 /
@@ -8,7 +8,7 @@
             PBR: {{ stockInfo.pbr }}
         </p>
         <p :style="{
-            color: stockInfo.diff > 0 ? '#F40006' : stockInfo.diff < 0 ? '#005FE0' : '#222',
+            color: stockInfo.diff > 0 ? '#F40006' : stockInfo.diff < 0 ? '#42a5f5' : '#222',
             'font-weight': 'bold'
         }">
             전일대비:
@@ -37,6 +37,40 @@
 
         <button class="btn-md btn-primary" @click="addFavorite">관심 종목으로 추가~!</button>
     </div>
+
+    
+    <table :style="{marginTop: '150px'}">
+        <tr>
+            <th>현재가</th>
+            <td>15,470</td>
+            <th>상한</th>
+            <td>18,650</td>
+        </tr>
+        <tr>
+            <th>대비</th>
+            <td>상승 1,120</td>
+            <th>하한</th>
+            <td>10,050</td>
+        </tr>
+        <tr>
+            <th>등락율</th>
+            <td>7.80%</td>
+            <th>시가</th>
+            <td>14,430</td>
+        </tr>
+        <tr>
+            <th>전일종가</th>
+            <td>14,350</td>
+            <th>고가</th>
+            <td>15,740</td>
+        </tr>
+        <tr>
+            <th>거래량</th>
+            <td>1,923,707</td>
+            <th>저가</th>
+            <td>14,110</td>
+        </tr>
+    </table>
 </template>
 
 <script>
