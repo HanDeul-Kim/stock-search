@@ -15,13 +15,30 @@ const app = express();
 app.use(cors());
 const PORT = 3000;
 
-const DATA_PATH = path.join(__dirname, 'stocks.json');
+// Vercel 환경에서 파일 경로 문제 해결을 위한 로직
+let DATA_PATH = path.join(__dirname, 'stocks.json');
+// 만약 현재 위치에 파일이 없으면 process.cwd() (루트) 기준으로 확인/
+if (!fs.existsSync(DATA_PATH)) {
+    DATA_PATH = path.join(process.cwd(), 'server', 'stocks.json');
+}
+
 // 내 json 데이터들 여기에 담아
 let stocks = [];
 
 if (fs.existsSync(DATA_PATH)) {
-    stocks = JSON.parse(fs.readFileSync(DATA_PATH, 'utf-8'));
-    console.log(`${stocks.length}개 종목 로드 성공`);
+    try {
+        stocks = JSON.parse(fs.readFileSync(DATA_PATH, 'utf-8'));
+        console.log(`${stocks.length}개 종목 로드 성공`);
+    } catch (e) {
+        console.error("stocks.json 파싱 실패:", e);
+    }
+} else {
+    console.warn(`경고: stocks.json 파일을 찾을 수 없습니다. 경로: ${DATA_PATH}`);
+}
+
+// 환경변수 체크
+if (!process.env.API_KEY) {
+    console.error("CRITICAL: API_KEY 환경변수가 설정되지 않았습니다.");
 }
 // 한국투자증권 open api 기본 주소
 const API_BASE = "https://openapi.koreainvestment.com:9443";
@@ -159,6 +176,9 @@ app.get('/api/stocks/:code', async (req, res) => {
 // 공공데이터포털
 app.get('/api/market-indices', async (req, res) => {
     try {
+        if (!process.env.PUBLIC_API_KEY) {
+            throw new Error("PUBLIC_API_KEY 환경변수가 없습니다.");
+        }
         const SERVICE_KEY = decodeURIComponent(process.env.PUBLIC_API_KEY);
         const url = 'https://apis.data.go.kr/1160100/service/GetMarketIndexInfoService/getStockMarketIndex';
 
@@ -171,6 +191,12 @@ app.get('/api/market-indices', async (req, res) => {
             })
         ]);
 
+        // 데이터 구조 확인
+        if (!kospiRes.data.response || !kospiRes.data.response.body) {
+            console.error("공공데이터 응답 형식 오류(KOSPI):", JSON.stringify(kospiRes.data));
+            throw new Error("API 응답 형식이 올바르지 않습니다.");
+        }
+
         const result = {
             kospi: kospiRes.data.response.body.items.item[0],
             kosdaq: kosdaqRes.data.response.body.items.item[0]
@@ -178,8 +204,9 @@ app.get('/api/market-indices', async (req, res) => {
 
         res.json(result);
     } catch (error) {
-        console.error(error);
-        res.status(500).send('데이터를 가져오지 못했습니다.');
+        console.error("market-indices 에러 발생:", error.message);
+        // 에러 메시지를 프론트엔드로 전달
+        res.status(500).json({ error: error.message, details: "로그를 확인하세요." });
     }
 });
 
