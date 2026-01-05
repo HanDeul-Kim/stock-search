@@ -225,12 +225,7 @@ app.get('/api/exchange/usdkrw-naver', async (req, res) => {
         res.status(500).json({ error: 'NAVER_EXCHANGE_FAIL' });
     }
 });
-app.get("/api/debug-env", (req, res) => {
-  res.json({
-    API_KEY: process.env.API_KEY ? "있음" : "없음",
-    API_SECRET: process.env.API_SECRET ? "있음" : "없음"
-  });
-});
+
 // ... existing code ...
 export default app;
 
