@@ -64,6 +64,10 @@ nav {
 .stock-search-inner {
     position: relative;
 }
+.stock-search-inner > input {
+    padding-left: 40px;
+    background: url('../../public/img/ico_search_black.png') no-repeat left 12px center / 18px 18px;
+}
 
 /* 자동완성 리스트 */
 .search-auto {
@@ -79,7 +83,7 @@ nav {
 }
 
 .search-list.active {
-    background-color: red;
+    background-color: rgba(0,0,0,0.5);
 }
 
 .search-list:hover {
@@ -92,7 +96,6 @@ nav {
 /********************* Home.vue 대시보드 스타일 *********************/
 .market-container {
     width: 100%;
-    margin-top: 60px;
 }
 
 .loading-box {
@@ -160,6 +163,7 @@ nav {
     background: #000;
     display: flex;
     align-items: center;
+    margin-bottom: 40px;
 }
 
 .marquee-wrap {
@@ -197,4 +201,183 @@ nav {
     100% {
         transform: translateX(-50%);
     }
+}
+
+.my-page-list > ul {
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 10px;
+    padding: 0 20px;
+}
+.my-page-list > ul > li {
+    height: 80px;
+    display:flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+}
+.my-page-list > ul > li:last-child {
+    border-bottom: none;
+}
+.my-page-list > ul > li .name-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.my-page-list > ul > li .name-box a {
+    color:#222;
+    font-size: 20px;
+    font-weight: 600;
+}
+.my-page-list > ul > li .name-box p {
+    color:#8C9299;
+    font-size: 14px;
+}
+.my-page-list > ul > li .detail-box {
+    display: flex;
+}
+.my-page-list > ul > li .detail-box .price-box,
+.my-page-list > ul > li .detail-box .up-and-high {
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.name-box,
+.price-box,
+.up-and-high {
+    justify-content: center;
+}
+.list-remove {
+    display: flex;
+    align-items: center;
+    margin-left: 80px;
+}
+.list-remove i{
+    display: block;
+    width: 24px;
+    height: 24px;
+    background: url('../../public/img/ico_delete.png') no-repeat center center / cover;
+    opacity: 0.3;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+.list-remove i:hover {
+    opacity: 0.7;
+}
+/* 정렬 버튼 */
+.sort-btns {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+.sort-btns > div {
+    position: relative;
+}
+.sort-btns > div .btn-wrap {
+    gap: 4px;
+    border-radius: 8px;
+    min-height: 32px;
+    min-width: 16px;
+    padding: 6px 12px;
+    white-space: nowrap;
+    background-color: #000;
+    color:#fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+.sort-btns > div .btn-wrap button {
+    color:#fff;
+    display: flex;
+    font-size: 14px;
+}
+.sort-btns > div .btn-wrap img {
+    width: 18px;
+}
+.sort-btns .dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    padding: 12px 0;
+    min-width: 120px;
+    border-radius: 14px;
+    background-color: #000;
+    z-index: 2;
+}
+.sort-btns .dropdown .select {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color:#fff;
+    margin: 0 12px;
+    padding:8px;
+    background-color: rgba(0,0,0, 1);
+    min-height:40px;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.sort-btns .dropdown .select:hover {
+    background-color: #2C2C35;
+}
+.sort-btns .dropdown .select.active {
+    color: #4397F7;
+    font-weight: 600;
+}
+/* table */
+.stock-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+  font-size: 14px;
+}
+.stock-table th {
+  width: 18%;
+  background: #f6f7f9;
+  color: #666;
+  text-align: left;
+  padding: 12px 14px;
+  font-weight: 500;
+  border-bottom: 1px solid #eee;
+  font-weight: 600;
+}
+.stock-table td {
+  width: 32%;
+  padding: 12px 14px;
+  border-bottom: 1px solid #eee;
+  color: #222;
+}
+.stock-table td > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.stock-table td > div > button {
+    border-radius: 8px;
+    min-height: 32px;
+    padding: 6px 12px;
+    white-space: nowrap;
+    font-size: 14px;
+}
+.stock-table tr:last-child th,
+.stock-table tr:last-child td {
+  border-bottom: none;
+}
+.unit {
+  font-size: 12px;
+  color: #888;
+  margin-left: 4px;
+}
+.rank-row {
+  background: #fafafa;
+}
+.rank-row td {
+    font-weight: 600;
+}
+.stock-table b {
+    font-weight: 600;
 }

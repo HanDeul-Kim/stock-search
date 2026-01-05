@@ -1,75 +1,94 @@
 <template>
-    <div v-if="stockInfo" style="margin-top:20px;">
-        <h2 class="tit-28">{{ stockInfo.name }} ({{ stockInfo.code }})</h2>
-        <p>시장: {{ formatMarket(stockInfo.market) }}</p>
-        <p>
-            현재가: {{ formatNumber(stockInfo.price) }}원 /
-            PER: {{ stockInfo.per }} /
-            PBR: {{ stockInfo.pbr }}
-        </p>
-        <p :style="{
-            color: stockInfo.diff > 0 ? '#F40006' : stockInfo.diff < 0 ? '#42a5f5' : '#222',
-            'font-weight': 'bold'
-        }">
-            전일대비:
-            {{ stockInfo.diff > 0 ? '+' : '' }}{{ formatNumber(stockInfo.diff) }}원
-            ({{ stockInfo.diffRate > 0 ? '+' : '' }}{{ stockInfo.diffRate }}%)
-        </p>
-        <p>거래량: {{ formatNumber(stockInfo.volume) }}</p>
-        <p>
-            시가: {{ formatNumber(stockInfo.open) }} /
-            고가: {{ formatNumber(stockInfo.high) }} /
-            저가: {{ formatNumber(stockInfo.low) }}
-        </p>
-        <p>
-            상한가: {{ formatNumber(stockInfo.upper) }} /
-            하한가: {{ formatNumber(stockInfo.lower) }}
-        </p>
-        <p>52주 최고가 : {{ formatNumber(stockInfo.high52w) }}</p>
-        <p>52주 최저가 : {{ formatNumber(stockInfo.low52w) }}</p>
-        <p>업종 : {{ stockInfo.sector }}</p>
-        <p>시가총액 : {{ formatNumber(stockInfo.marketCap) }} (단위: 백만)</p>
-        <p>
-            시가총액 순위 :
-            {{ stockInfo.marketRankMarket === 'KOSPI' ? '코스피' : '코스닥' }}
-            {{ stockInfo.marketCapRank }}위
-        </p>
+    <h2 class="tit-24">종목 정보</h2>
+    <table v-if="stockInfo" class="stock-table" style="margin:20px 0">
+        <tbody>
+            <tr>
+                <th>종목명 (코드)</th>
+                <td colspan="3">
+                    <div>
+                        <span><b class="txt-24">{{ stockInfo.name }} ({{ stockInfo.code }})</b></span>
+                        <button class="btn-md btn-primary" @click="addFavorite">관심종목 추가</button>
+                    </div>
+                </td>
+            </tr>
+            <tr class="price-row">
+                <th>현재가</th>
+                <td :style="{
+                    color: stockInfo.diff > 0 ? '#F40006' : stockInfo.diff < 0 ? '#42a5f5' : '#222',
+                    'font-weight': 'bold'
+                }"><b class="txt-16">{{ formatNumber(stockInfo.price) }}원</b></td>
+                <th>전일대비</th>
+                <td :style="{
+                    color: stockInfo.diff > 0 ? '#F40006' : stockInfo.diff < 0 ? '#42a5f5' : '#222',
+                    'font-weight': 'bold'
+                }"><b class="txt-16">{{ stockInfo.diff > 0 ? '+' : '' }}{{ formatNumber(stockInfo.diff) }}원
+                    ({{ stockInfo.diffRate > 0 ? '+' : '' }}{{ stockInfo.diffRate }}%)</b></td>
 
-        <button class="btn-md btn-primary" @click="addFavorite">관심 종목으로 추가~!</button>
-    </div>
+            </tr>
+            <tr>
+                <th>시장</th>
+                <td><b>{{ formatMarket(stockInfo.market) }}</b></td>
+                <th>거래량</th>
+                <td><b class="txt-16">{{ formatNumber(stockInfo.volume) }}</b></td>
+            </tr>
 
-    
-    <table :style="{marginTop: '150px'}">
-        <tr>
-            <th>현재가</th>
-            <td>15,470</td>
-            <th>상한</th>
-            <td>18,650</td>
-        </tr>
-        <tr>
-            <th>대비</th>
-            <td>상승 1,120</td>
-            <th>하한</th>
-            <td>10,050</td>
-        </tr>
-        <tr>
-            <th>등락율</th>
-            <td>7.80%</td>
-            <th>시가</th>
-            <td>14,430</td>
-        </tr>
-        <tr>
-            <th>전일종가</th>
-            <td>14,350</td>
-            <th>고가</th>
-            <td>15,740</td>
-        </tr>
-        <tr>
-            <th>거래량</th>
-            <td>1,923,707</td>
-            <th>저가</th>
-            <td>14,110</td>
-        </tr>
+
+            <tr>
+
+                <th>PER</th>
+                <td>{{ stockInfo.per }}</td>
+                <th>PBR</th>
+                <td>{{ stockInfo.pbr }}</td>
+            </tr>
+
+            <tr>
+
+
+                <th>시가총액</th>
+                <td>{{ formatNumber(stockInfo.marketCap) }}<span class="unit">(백만)</span></td>
+                <th>시가</th>
+                <td>{{ formatNumber(stockInfo.open) }}</td>
+            </tr>
+
+            <tr>
+                <th>고가</th>
+                <td>{{ formatNumber(stockInfo.high) }}</td>
+                <th>저가</th>
+                <td>{{ formatNumber(stockInfo.low) }}</td>
+
+            </tr>
+
+            <tr>
+
+                <th>상한가</th>
+                <td>{{ formatNumber(stockInfo.upper) }}</td>
+                <th>하한가</th>
+                <td>{{ formatNumber(stockInfo.lower) }}</td>
+            </tr>
+
+            <tr>
+
+
+                <th>52주 최고</th>
+                <td>{{ formatNumber(stockInfo.high52w) }}</td>
+                <th>52주 최저</th>
+                <td>{{ formatNumber(stockInfo.low52w) }}</td>
+            </tr>
+
+            <tr>
+                <th>업종</th>
+                <td>{{ stockInfo.sector }}</td>
+
+                <th></th>
+                <td></td>
+            </tr>
+
+            <tr class="rank-row">
+                <th>시총 순위</th>
+                <td colspan="3">{{ stockInfo.marketRankMarket === 'KOSPI' ? '코스피' : '코스닥' }}
+            {{ stockInfo.marketCapRank }}위</td>
+            </tr>
+        </tbody>
     </table>
 </template>
 

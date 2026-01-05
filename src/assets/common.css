@@ -24,7 +24,11 @@ button {outline: none; border:none; background: none; cursor: pointer;}
     background-color: #d62727;
     color:#fff;
 }
-/********************* font  *********************/
+.btn-wrap {
+    display: flex;
+    align-items: center;
+}
+/********************* font *********************/
 .tit-24 {
     color:#000;
     font-size: 24px;
@@ -37,6 +41,8 @@ button {outline: none; border:none; background: none; cursor: pointer;}
     font-weight: 600;
     margin-bottom: 18px;
 }
+.txt-16 {font-size: 16px;}
+.txt-24 {font-size: 24px;}
 
 /********************* gap & margin & padding *********************/
 .dashboard-item + .dashboard-item {
