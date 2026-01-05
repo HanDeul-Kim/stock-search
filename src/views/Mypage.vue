@@ -102,7 +102,7 @@ export default {
 
             try {
                 // 저장된 종목들의 최신 데이터 가져오기
-                const promises = sent.map(item => axios.get(`http://localhost:3000/api/stocks/${item.code}`));
+                const promises = sent.map(item => axios.get(`/api/stocks/${item.code}`));
                 const responses = await Promise.all(promises);
                 this.favoriteStocks = responses.map((res, idx) => ({
                     ...sent[idx],     // 기존 데이터

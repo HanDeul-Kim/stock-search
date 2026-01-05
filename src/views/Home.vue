@@ -86,7 +86,7 @@ export default {
         // 데이터 가져오기
         async fetchMarketData() {
             try {
-                const response = await axios.get('http://localhost:3000/api/market-indices');
+                const response = await axios.get('/api/market-indices');
                 this.indices = response.data;
             } catch (error) {
                 console.error("데이터 호출 에러:", error);
@@ -98,7 +98,7 @@ export default {
         async fetchUsdKrwRealtime() {
             try {
                 const res = await axios.get(
-                    'http://localhost:3000/api/exchange/usdkrw-naver'
+                    '/api/exchange/usdkrw-naver'
                 );
                 this.usdkrw = {
                     rate: res.data.rate,

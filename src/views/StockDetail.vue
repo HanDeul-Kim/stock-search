@@ -114,7 +114,7 @@ export default {
     },
     methods: {
         async fetchStockDetail(code) {
-            const res = await axios.get(`http://localhost:3000/api/stocks/${code}`);
+            const res = await axios.get(`/api/stocks/${code}`);
             this.stockInfo = res.data;
         },
         // 숫자 콤마 표기

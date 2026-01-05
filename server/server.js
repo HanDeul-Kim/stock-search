@@ -218,13 +218,18 @@ app.get('/api/exchange/usdkrw-naver', async (req, res) => {
         res.json({
             base: usd.subValue,
             rate: Number(krw.value.replace(/,/g, '')), // 1444.10
-            raw: response.data 
+            raw: response.data
         });
     } catch (e) {
         console.error('NAVER 환율 에러', e.message);
         res.status(500).json({ error: 'NAVER_EXCHANGE_FAIL' });
     }
 });
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
+// ... existing code ...
+export default app;
+
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`🚀 Server running on http://localhost:${PORT}`);
+    });
+}

@@ -79,7 +79,7 @@ export default {
         // 데이터 가져오기
         async fetchMarketData() {
             try {
-                const response = await axios.get('http://localhost:3000/api/market-indices');
+                const response = await axios.get('/api/market-indices');
                 this.indices = response.data;
 
                 // $nextTick는 dom 접근 실패때문에, vue가 dom 업데이트 끝나고 다음 코드 실행해줘임.

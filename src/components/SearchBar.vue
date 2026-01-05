@@ -68,7 +68,7 @@ export default {
                 return;
             }
             try {
-                const res = await axios.get(`http://localhost:3000/api/stocks?q=${q}`);
+                const res = await axios.get(`/api/stocks?q=${q}`);
                 this.suggestions = res.data;
                 this.isSuggestionsVisible = true;   // 자동완성창 다시 열기
 
@@ -98,7 +98,7 @@ export default {
         // 종목 클릭 시 상세 정보 요청
         async selectStock(item) {
             try {
-                const res = await axios.get(`http://localhost:3000/api/stocks/${item.code}`);
+                const res = await axios.get(`/api/stocks/${item.code}`);
                 this.stockInfo = res.data;
                 this.searchQuery = item.name;
                 this.isSuggestionsVisible = false;
