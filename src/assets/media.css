@@ -1,0 +1,171 @@
+/********************* max-width: 768px *********************/
+@media (max-width: 768px) {
+    .my-page-list > ul > li .detail-box .up-and-high.pc {
+        display: none;
+    }
+    .my-page-list > ul > li .detail-box .up-and-high.mobile {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 4px;
+    }
+    .market-item-wrap {
+        flex-direction: column;
+    }
+    .stock-table .txt-24 {
+        font-size: 18px;
+    }
+    /* mypage */
+    .my-page-list {
+        padding-bottom: 40px;
+    }
+    .my-page-list > ul > li {
+        flex-direction: column;
+        height: auto;
+    }
+   
+    .my-page-list > ul > li .detail-box {
+        flex-direction: column;
+    }
+    .my-page-list > ul > li .detail-box .price-box {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .my-page-list > ul > li .detail-box .price-box,
+    .my-page-list > ul > li .detail-box .up-and-high,
+    .list-remove {
+        width: 100%;
+        align-items: flex-start;
+    }
+    .my-page-list > ul > li .name-box {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin: 12px 0;
+    }
+     .my-page-list > ul > li .name-box a {
+        font-size: 16px;
+    }
+    .my-page-list > ul > li .name-box p {
+        display: none;
+    }
+    .my-page-list b,
+    .my-page-list p {
+        font-size: 14px;
+    }
+    .my-page-list p {
+        font-weight: 600;
+        font-size: 14px;
+        color:rgba(0,0,0,0.6);
+    }
+    .price-box p {
+        font-size: 12px;
+    }
+    .list-remove {
+        padding: 0 0 8px;
+        justify-content: flex-end;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+    .list-remove i {
+        width: 20px;
+        height: 20px;
+    }
+
+    .price-box b::before {
+        content:'현재가 :';
+        margin-right: 8px;
+        color:#333;
+    }
+    .my-page-list > ul > li .detail-box .up-and-high.mobile::before {
+        content:'등락률 : ';
+        margin-right: 4px;
+        font-size: 14px;
+        color:#333;
+        font-weight: 600;
+    }
+    /* 반응형 급한대로 이렇게 나중에 수정 예정 */
+    .my-page-list > ul > li .detail-box .up-and-high.mobile p:last-child::before {
+        content:'(';
+    }
+    .my-page-list > ul > li .detail-box .up-and-high.mobile p:last-child::after {
+        content:')';
+    }
+    .sort-btns .dropdown {
+        left: -34px;
+    }
+}
+
+/********************* max-width: 500px *********************/
+@media (max-width: 500px) {
+    /* HOME */
+    .market-item .date {
+        font-size: 12px;
+    }
+    .market-item .price {
+        font-size: 28px;
+    }
+    .market-item-wrap b {
+        font-size: 14px;
+    }
+    .tit-24 {
+        font-size: 22px;
+        margin-bottom: 12px;
+    }
+    .search-list {
+        font-size: 14px;
+    }
+    /* table */
+    .stock-table {
+        display: block;
+        width: 100%;
+        padding: 12px 16px;
+    }
+    .stock-table tbody,
+    .stock-table tr,
+    .stock-table th,
+    .stock-table td {
+        display: block;
+        width: 100%;
+    }
+    .stock-table tr:nth-of-type(9) th:last-child,
+    .stock-table tr:nth-of-type(9) td:last-child {
+        display: none;
+    }
+    .stock-table th {
+        border-bottom: none;
+        padding: 0;
+        background: none;
+        text-align: left;
+        color: #666;
+        font-size: 12px;
+    }
+    .stock-table th + td {
+        margin-top: 8px;
+    }
+    .stock-table td {
+        padding: 0;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+    .stock-table td+th,
+    .stock-table tr+tr {
+        margin-top: 10px;
+    }
+    .stock-table .rank-row {
+        border-radius: 10px;
+    }
+    .stock-table .rank-row th {
+        padding-top: 10px;
+    }
+    .stock-table td>div>button {
+        min-height: 28px;
+        font-size: 12px;
+        padding: 6px 6px;
+    }
+    .stock-table .txt-24 {
+        font-size: 16px;
+    }
+    
+
+}

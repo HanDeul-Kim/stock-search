@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap');
 * {
     padding: 0;
     margin: 0;
@@ -122,9 +123,12 @@ nav {
 
 .price {
     font-size: 36px;
-    font-weight: 800;
+    font-weight: 600;
     color: #333;
     margin: 15px 0;
+}
+span.price {
+    font-family: "Google Sans Flex", sans-serif;
 }
 
 .date {
@@ -247,6 +251,12 @@ nav {
 .price-box,
 .up-and-high {
     justify-content: center;
+}
+.my-page-list > ul > li .detail-box .up-and-high.pc {
+    display: flex;
+}
+.my-page-list > ul > li .detail-box .up-and-high.mobile {
+    display: none;
 }
 .list-remove {
     display: flex;

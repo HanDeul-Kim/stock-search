@@ -43,7 +43,7 @@
                         }">{{ formatNumber(stock.price) }}</b>
                         <p>{{ formatNumber(stock.volume) }}주</p>
                     </div>
-                    <div class="up-and-high">
+                    <div class="up-and-high pc">
                         <p :style="{
                             color: stock.diff > 0 ? '#F40006' : stock.diff < 0 ? '#42a5f5' : '#222',
                             'font-weight': 'bold'
@@ -56,7 +56,19 @@
                         }">
                             {{ stock.diffRate > 0 ? '+' : '' }}{{ stock.diffRate }}%
                         </p>
-
+                    </div>
+                    <div class="up-and-high mobile">
+                        <p :style="{
+                            color: stock.diff > 0 ? '#F40006' : stock.diff < 0 ? '#42a5f5' : '#222',
+                            'font-weight': 'bold'
+                        }">
+                            {{ stock.diff > 0 ? '+' : '' }}{{ formatNumber(stock.diff) }}<br>
+                        </p>
+                        <p :style="{
+                            color: stock.diff > 0 ? '#F40006' : stock.diff < 0 ? '#42a5f5' : '#222',
+                            'font-weight': 'bold'
+                        }">
+                            {{ stock.diffRate > 0 ? '+' : '' }}{{ stock.diffRate }}%</p>
                     </div>
                     <div class="list-remove">
                         <i @click="removeFavorite(stock.code)"></i>
