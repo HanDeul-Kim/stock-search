@@ -95,8 +95,6 @@
     .sort-btns .dropdown {
         left: -34px;
     }
-
-
     nav .gnb {
         display: none;
     }
@@ -106,6 +104,12 @@
     .stock-search-m {
         display: flex;
     }
+    .stock-search-inner input {
+        font-size: 16px;
+    }
+    .stock-search-inner input::placeholder {
+        font-size: 14px;
+    }
 }
 
 /********************* max-width: 500px *********************/
@@ -114,7 +118,6 @@
         padding: 10px 12px;
     }
     .input-md {width: 100%;}
-    input::placeholder {font-size: 12px;}
     /* HOME */
     .market-item .date {
         font-size: 12px;
