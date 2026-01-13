@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap');
+
 * {
     padding: 0;
     margin: 0;
@@ -9,7 +10,9 @@ html,
 body {
     height: 100%;
 }
-
+body.hidden {
+    overflow-y: hidden;
+}
 ul,
 ol,
 li {
@@ -30,6 +33,9 @@ a {
 
 /********************* header *********************/
 header {
+    display: flex;
+    height: 50px;
+    align-items: center;
     position: relative;
     border-bottom: 1px solid #edeff2;
     z-index: 10;
@@ -49,6 +55,97 @@ nav {
     display: flex;
 }
 
+/********************* header 모바일  *********************/
+.stock-search-m {
+    display: none;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+.stock-search-m > li:first-child { width: 100%;}
+.gnb-btn {
+    position: relative;
+    width: 20px;
+    height: 14px;
+    cursor: pointer;
+}
+
+.gnb-btn>span {
+    display: block;
+    width: 100%;
+    border: 1px solid #000;
+    position: absolute;
+    transition: transform 0.3s;
+}
+
+.gnb-btn.active>span {
+    position: absolute;
+}
+
+.gnb-btn>span:nth-child(1) {
+    top: 0;
+}
+
+.gnb-btn>span:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.gnb-btn>span:nth-child(3) {
+    bottom: 0;
+}
+
+.gnb-btn.active>span:nth-child(1) {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.gnb-btn.active>span:nth-child(2) {
+    display: none;
+}
+
+.gnb-btn.active>span:nth-child(3) {
+    bottom: 50%;
+    transform: translateY(50%) rotate(-45deg);
+
+}
+
+.gnb-m {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 50px);
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.gnb-m ul {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    margin-top: 100px;
+}
+
+.gnb-m ul li a {
+    position: relative;
+    background-image: linear-gradient(to right, #fff, #fff);
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    background-position: left;
+    color: #fff;
+    font-size: 18px;
+    transition: 0.5s ease;
+}
+
+.gnb-m ul li a:hover {
+    background-size: 100% 100%;
+    color: #000;
+}
+
 /********************* 검색 input *********************/
 .stock-search {
     display: flex;
@@ -65,7 +162,8 @@ nav {
 .stock-search-inner {
     position: relative;
 }
-.stock-search-inner > input {
+
+.stock-search-inner>input {
     padding-left: 40px;
     background: url('../../public/img/ico_search_black.png') no-repeat left 12px center / 18px 18px;
 }
@@ -84,7 +182,7 @@ nav {
 }
 
 .search-list.active {
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .search-list:hover {
@@ -127,6 +225,7 @@ nav {
     color: #333;
     margin: 15px 0;
 }
+
 span.price {
     font-family: "Google Sans Flex", sans-serif;
 }
@@ -168,6 +267,7 @@ span.price {
     display: flex;
     align-items: center;
     margin-bottom: 40px;
+    z-index: 1;
 }
 
 .marquee-wrap {
@@ -207,40 +307,46 @@ span.price {
     }
 }
 
-.my-page-list > ul {
+.my-page-list>ul {
     border: 1px solid rgb(204, 204, 204);
     border-radius: 10px;
     padding: 0 20px;
 }
-.my-page-list > ul > li {
+
+.my-page-list>ul>li {
     height: 80px;
-    display:flex;
+    display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #ccc;
 }
-.my-page-list > ul > li:last-child {
+
+.my-page-list>ul>li:last-child {
     border-bottom: none;
 }
-.my-page-list > ul > li .name-box {
+
+.my-page-list>ul>li .name-box {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-.my-page-list > ul > li .name-box a {
-    color:#222;
+.my-page-list>ul>li .name-box a {
+    color: #222;
     font-size: 20px;
     font-weight: 600;
 }
-.my-page-list > ul > li .name-box p {
-    color:#8C9299;
+
+.my-page-list>ul>li .name-box p {
+    color: #8C9299;
     font-size: 14px;
 }
-.my-page-list > ul > li .detail-box {
+
+.my-page-list>ul>li .detail-box {
     display: flex;
 }
-.my-page-list > ul > li .detail-box .price-box,
-.my-page-list > ul > li .detail-box .up-and-high {
+
+.my-page-list>ul>li .detail-box .price-box,
+.my-page-list>ul>li .detail-box .up-and-high {
     width: 120px;
     display: flex;
     flex-direction: column;
@@ -252,18 +358,22 @@ span.price {
 .up-and-high {
     justify-content: center;
 }
-.my-page-list > ul > li .detail-box .up-and-high.pc {
+
+.my-page-list>ul>li .detail-box .up-and-high.pc {
     display: flex;
 }
-.my-page-list > ul > li .detail-box .up-and-high.mobile {
+
+.my-page-list>ul>li .detail-box .up-and-high.mobile {
     display: none;
 }
+
 .list-remove {
     display: flex;
     align-items: center;
     margin-left: 80px;
 }
-.list-remove i{
+
+.list-remove i {
     display: block;
     width: 24px;
     height: 24px;
@@ -272,19 +382,23 @@ span.price {
     cursor: pointer;
     transition: opacity 0.3s;
 }
+
 .list-remove i:hover {
     opacity: 0.7;
 }
+
 /* 정렬 버튼 */
 .sort-btns {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 10px;
 }
-.sort-btns > div {
+
+.sort-btns>div {
     position: relative;
 }
-.sort-btns > div .btn-wrap {
+
+.sort-btns>div .btn-wrap {
     gap: 4px;
     border-radius: 8px;
     min-height: 32px;
@@ -292,18 +406,21 @@ span.price {
     padding: 6px 12px;
     white-space: nowrap;
     background-color: #000;
-    color:#fff;
+    color: #fff;
     font-size: 14px;
     cursor: pointer;
 }
-.sort-btns > div .btn-wrap button {
-    color:#fff;
+
+.sort-btns>div .btn-wrap button {
+    color: #fff;
     display: flex;
     font-size: 14px;
 }
-.sort-btns > div .btn-wrap img {
+
+.sort-btns>div .btn-wrap img {
     width: 18px;
 }
+
 .sort-btns .dropdown {
     position: absolute;
     top: calc(100% + 10px);
@@ -314,80 +431,93 @@ span.price {
     background-color: #000;
     z-index: 2;
 }
+
 .sort-btns .dropdown .select {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    color:#fff;
+    color: #fff;
     margin: 0 12px;
-    padding:8px;
-    background-color: rgba(0,0,0, 1);
-    min-height:40px;
+    padding: 8px;
+    background-color: rgba(0, 0, 0, 1);
+    min-height: 40px;
     font-size: 14px;
     border-radius: 8px;
     cursor: pointer;
 }
+
 .sort-btns .dropdown .select:hover {
     background-color: #2C2C35;
 }
+
 .sort-btns .dropdown .select.active {
     color: #4397F7;
     font-weight: 600;
 }
+
 /* table */
 .stock-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
-  font-size: 14px;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
 }
+
 .stock-table th {
-  width: 18%;
-  background: #f6f7f9;
-  color: #666;
-  text-align: left;
-  padding: 12px 14px;
-  font-weight: 500;
-  border-bottom: 1px solid #eee;
-  font-weight: 600;
+    width: 18%;
+    background: #f6f7f9;
+    color: #666;
+    text-align: left;
+    padding: 12px 14px;
+    font-weight: 500;
+    border-bottom: 1px solid #eee;
+    font-weight: 600;
 }
+
 .stock-table td {
-  width: 32%;
-  padding: 12px 14px;
-  border-bottom: 1px solid #eee;
-  color: #222;
+    width: 32%;
+    padding: 12px 14px;
+    border-bottom: 1px solid #eee;
+    color: #222;
 }
-.stock-table td > div {
+
+.stock-table td>div {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.stock-table td > div > button {
+
+.stock-table td>div>button {
     border-radius: 8px;
     min-height: 32px;
     padding: 6px 12px;
     white-space: nowrap;
     font-size: 14px;
 }
+
 .stock-table tr:last-child th,
 .stock-table tr:last-child td {
-  border-bottom: none;
+    border-bottom: none;
 }
+
 .unit {
-  font-size: 12px;
-  color: #888;
-  margin-left: 4px;
+    font-size: 12px;
+    color: #888;
+    margin-left: 4px;
 }
+
 .rank-row {
-  background: #fafafa;
+    background: #fafafa;
 }
+
 .rank-row td {
     font-weight: 600;
 }
+
 .stock-table b {
     font-weight: 600;
 }

@@ -1,27 +1,66 @@
 <template>
-    <ul class="stock-search" ref="searchContainer">
-        <li>
-            <div class="stock-search-inner">
-                <input :value="searchQuery" @input="handleInput" @focus="isSuggestionsVisible = true"
-                    @keyup.enter="fetchStock" @keydown.down.prevent="moveDown" @keydown.up.prevent="moveUp"
-                    placeholder="종목명이나 종목코드를 입력해주세요." class="input-md" />
+    <div class="stock-search-wrap" ref="searchContainer">
+        <ul class="stock-search">
+            <li>
+                <div class="stock-search-inner">
+                    <input :value="searchQuery" @input="handleInput" @focus="isSuggestionsVisible = true"
+                        @keyup.enter="fetchStock" @keydown.down.prevent="moveDown" @keydown.up.prevent="moveUp"
+                        placeholder="종목명이나 종목코드를 입력해주세요." class="input-md" />
 
-                <div v-if="suggestions.length && isSuggestionsVisible" class="search-auto">
+                    <div v-if="suggestions.length && isSuggestionsVisible" class="search-auto">
+                        <ul>
+                            <li v-for="(item, idx) in suggestions" :key="item.code" :idx="idx"
+                                @mousedown="selectStock(item)" class="search-list"
+                                :class="{ active: idx === selectKeybord }">
+                                {{ item.code }} {{ item.name }} {{ formatMarket(item.market) }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <router-link to="/mypage">내 관심종목</router-link>
+            </li>
+        </ul>
+        <ul class="stock-search-m">
+            <li>
+                <div class="stock-search-inner">
+                    <input :value="searchQuery" @input="handleInput" @focus="isSuggestionsVisible = true"
+                        @keyup.enter="fetchStock" @keydown.down.prevent="moveDown" @keydown.up.prevent="moveUp"
+                        placeholder="종목명이나 종목코드를 입력해주세요." class="input-md" />
+
+                    <div v-if="suggestions.length && isSuggestionsVisible" class="search-auto">
+                        <ul>
+                            <!-- 이벤트 버블링때문인지는 모르겠지만 @mousedown으로 변경했음. -->
+                            <li v-for="(item, idx) in suggestions" :key="item.code" :idx="idx"
+                                @mousedown="selectStock(item)" class="search-list"
+                                :class="{ active: idx === selectKeybord }">
+                                {{ item.code }} {{ item.name }} {{ formatMarket(item.market) }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="gnb-btn" :class="{ 'active': isMenuOpen }" @click="toggleMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div v-if="isMenuOpen" class="gnb-m">
                     <ul>
-                        <!-- 이벤트 버블링때문인지는 모르겠지만 @mousedown으로 변경했음. -->
-                        <li v-for="(item, idx) in suggestions" :key="item.code" :idx="idx"
-                            @mousedown="selectStock(item)" class="search-list"
-                            :class="{ active: idx === selectKeybord }">
-                            {{ item.code }} {{ item.name }} {{ formatMarket(item.market) }}
+                        <li>
+                            <router-link to="/" @click="closeMenu">홈으로 가기</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/mypage" @click="closeMenu">내 관심종목</router-link>
                         </li>
                     </ul>
                 </div>
-            </div>
-        </li>
-        <li>
-            <router-link to="/mypage">내 관심종목</router-link>
-        </li>
-    </ul>
+            </li>
+        </ul>
+    </div>
+
 </template>
 
 <script>
@@ -40,7 +79,8 @@ export default {
             // 자동완성 표시여부
             isSuggestionsVisible: false,
             // 키보드 선택 인덱스
-            selectKeybord: -1
+            selectKeybord: -1,
+            isMenuOpen: false
         };
     },
     watch: {
@@ -50,7 +90,15 @@ export default {
             this.suggestions = [];
             this.selectKeybord = -1;
             this.isSuggestionsVisible = false;
-        }
+        },
+        // 스크롤 hidden 해제
+        isMenuOpen(newValue) {
+            if (newValue) {
+                document.body.classList.add('hidden');
+            } else {
+                document.body.classList.remove('hidden');
+            }
+        },
     },
     mounted() {
         // 화면 클릭 감지 이벤트 (검색창에서 빈공간 누르면 사라지게 하려고)
@@ -152,6 +200,14 @@ export default {
             if (!value) return '-';
             return Number(value).toLocaleString();
         },
+        // gnb
+        toggleMenu() {
+            this.isMenuOpen = !this.isMenuOpen
+        },
+        closeMenu() {
+            this.isMenuOpen = false
+        },
+
     }
 };
 </script>

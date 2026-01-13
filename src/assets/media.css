@@ -1,5 +1,6 @@
 /********************* max-width: 768px *********************/
 @media (max-width: 768px) {
+    .stock-search-wrap {width: 100%;}
     .my-page-list > ul > li .detail-box .up-and-high.pc {
         display: none;
     }
@@ -94,10 +95,26 @@
     .sort-btns .dropdown {
         left: -34px;
     }
+
+
+    nav .gnb {
+        display: none;
+    }
+    .stock-search {
+        display: none;
+    }
+    .stock-search-m {
+        display: flex;
+    }
 }
 
 /********************* max-width: 500px *********************/
 @media (max-width: 500px) {
+    nav {
+        padding: 10px 12px;
+    }
+    .input-md {width: 100%;}
+    input::placeholder {font-size: 12px;}
     /* HOME */
     .market-item .date {
         font-size: 12px;
