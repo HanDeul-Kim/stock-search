@@ -41,7 +41,10 @@ if (!process.env.API_KEY) {
     console.error("CRITICAL: API_KEY 환경변수가 설정되지 않았습니다.");
 }
 // 한국투자증권 open api 기본 주소
-const API_BASE = "https://openapi.koreainvestment.com:9443";
+// 실전 투자용
+// const API_BASE = "https://openapi.koreainvestment.com:9443";
+// 모의 투자용
+const API_BASE = "https://openapivts.koreainvestment.com:29443";
 const APP_KEY = process.env.API_KEY;
 const APP_SECRET = process.env.API_SECRET;
 
@@ -49,6 +52,7 @@ const APP_SECRET = process.env.API_SECRET;
 let accessToken = null;
 // 토큰접근
 async function getAccessToken() {
+    
     if (accessToken) return accessToken;
     try {
         const res = await axios.post(`${API_BASE}/oauth2/token`, null, {
